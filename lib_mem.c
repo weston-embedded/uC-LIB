@@ -1316,6 +1316,7 @@ void  *Mem_SegAllocHW (const  CPU_CHAR    *p_name,
 *                                   LIB_MEM_ERR_INVALID_BLK_SIZE        Invalid block size specified.
 *                                   LIB_MEM_ERR_INVALID_SEG_SIZE        Invalid segment size.
 *                                   LIB_MEM_ERR_HEAP_EMPTY              No more memory available on heap.
+*                                   LIB_MEM_ERR_ADDR_OVF                Memory allocation exceeds address space.
 *
 *                                   ---------------RETURNED BY Mem_SegOverlapChkCritical()----------------
 *                                   LIB_MEM_ERR_INVALID_SEG_EXISTS      Segment already exists.
@@ -1355,6 +1356,7 @@ void  Mem_PoolCreate (MEM_POOL          *p_pool,
     MEM_SEG           *p_seg;
     void              *p_pool_mem;
     CPU_SIZE_T         pool_size;
+    CPU_SIZE_T         tbl_size;
     CPU_SIZE_T         blk_size_align;
     CPU_ADDR           pool_addr_end;
     MEM_POOL_BLK_QTY   blk_ix;
@@ -1453,11 +1455,18 @@ void  Mem_PoolCreate (MEM_POOL          *p_pool,
         CPU_CRITICAL_EXIT();
     }
 
-
                                                                 /* ---------------- ALLOC MEM FOR POOL ---------------- */
                                                                 /* Calc blk size with align.                            */
     blk_size_align =  MATH_ROUND_INC_UP_PWR2(blk_size, blk_align);
     pool_size      =  blk_size_align * blk_nbr;                 /* Calc required size for pool.                         */
+    tbl_size       =  blk_nbr * sizeof(void *);                 /* Calc required size for free block table.             */
+
+                                                                /* Detect integer overflows in the size calculations.   */
+    if ((blk_size_align >  (DEF_INT_CPU_U_MAX_VAL / blk_nbr       )) ||
+        (blk_nbr        >  (DEF_INT_CPU_U_MAX_VAL / sizeof(void *)))) {
+       *p_err = LIB_MEM_ERR_ADDR_OVF;
+        return;
+    }
 
                                                                 /* Alloc mem for pool.                                  */
     p_pool_mem = (void *)Mem_SegAllocInternal("Unnamed static pool",
@@ -1474,7 +1483,7 @@ void  Mem_PoolCreate (MEM_POOL          *p_pool,
                                                                 /* ------------ ALLOC MEM FOR FREE BLK TBL ------------ */
     p_pool->BlkFreeTbl = (void **)Mem_SegAllocInternal("Unnamed static pool free blk tbl",
                                                        &Mem_SegHeap,
-                                                        blk_nbr * sizeof(void *),
+                                                        tbl_size,
                                                         sizeof(CPU_ALIGN),
                                                         LIB_MEM_PADDING_ALIGN_NONE,
                                                         p_bytes_reqd,
@@ -1822,6 +1831,7 @@ MEM_POOL_BLK_QTY  Mem_PoolBlkGetNbrAvail (MEM_POOL  *p_pool,
 *                                   LIB_MEM_ERR_INVALID_MEM_SIZE    Invalid memory block size specified.
 *                                   LIB_MEM_ERR_NULL_PTR            Error or segment data pointer NULL.
 *                                   LIB_MEM_ERR_SEG_OVF             Allocation would overflow memory segment.
+*                                   LIB_MEM_ERR_ADDR_OVF            Memory allocation exceeds address space.
 *
 * Return(s)   : None.
 *
@@ -1894,6 +1904,7 @@ void  Mem_DynPoolCreate (const  CPU_CHAR      *p_name,
 *                                   LIB_MEM_ERR_INVALID_MEM_SIZE    Invalid memory block size specified.
 *                                   LIB_MEM_ERR_NULL_PTR            Error or segment data pointer NULL.
 *                                   LIB_MEM_ERR_SEG_OVF             Allocation would overflow memory segment.
+*                                   LIB_MEM_ERR_ADDR_OVF            Memory allocation exceeds address space.
 *
 * Return(s)   : None.
 *
@@ -2688,6 +2699,7 @@ static  void  Mem_SegAllocTrackCritical (const  CPU_CHAR    *p_name,
 *                                   LIB_MEM_ERR_INVALID_BLK_SIZE    Invalid requested block size.
 *                                   LIB_MEM_ERR_INVALID_BLK_NBR     Invalid requested block quantity max.
 *                                   LIB_MEM_ERR_NULL_PTR            Pool data pointer NULL.
+*                                   LIB_MEM_ERR_ADDR_OVF            Memory allocation exceeds address space.
 *
 *                                   ------------------RETURNED BY Mem_SegAllocInternal()-------------------
 *                                   LIB_MEM_ERR_INVALID_MEM_ALIGN   Invalid memory block alignment requested.
@@ -2716,6 +2728,7 @@ static  void  Mem_DynPoolCreateInternal (const  CPU_CHAR      *p_name,
                                                 LIB_ERR       *p_err)
 {
     CPU_INT08U  *p_blks          = DEF_NULL;
+    CPU_SIZE_T   seg_size;
     CPU_SIZE_T   blk_size_align;
     CPU_SIZE_T   blk_align_worst = DEF_MAX(blk_align, blk_padding_align);
 
@@ -2757,9 +2770,17 @@ static  void  Mem_DynPoolCreateInternal (const  CPU_CHAR      *p_name,
 
     if (blk_qty_init != 0u) {                                   /* Alloc init blks.                                     */
         CPU_SIZE_T  i;
+
+        seg_size = blk_size_align * blk_qty_init;               /* Calc required size for pool.                         */
+                                                                /* Detect integer overflow in the seg_size calculation. */
+        if (blk_size_align > (DEF_INT_CPU_U_MAX_VAL / blk_qty_init)) {
+           *p_err = LIB_MEM_ERR_ADDR_OVF;
+            return;
+        }
+
         p_blks = (CPU_INT08U *)Mem_SegAllocInternal(p_name,
                                                     p_seg,
-                                                    blk_size_align * blk_qty_init,
+                                                    seg_size,
                                                     DEF_MAX(blk_align, sizeof(void *)),
                                                     LIB_MEM_PADDING_ALIGN_NONE,
                                                     DEF_NULL,
