@@ -3,7 +3,7 @@
 *                                               uC/LIB
 *                                       Custom Library Modules
 *
-*                    Copyright 2004-2020 Silicon Laboratories Inc. www.silabs.com
+*                    Copyright 2004-2021 Silicon Laboratories Inc. www.silabs.com
 *
 *                                 SPDX-License-Identifier: APACHE-2.0
 *
@@ -20,7 +20,7 @@
 *                                     CORE CUSTOM LIBRARY MODULE
 *
 * Filename : lib_def.h
-* Version  : V1.39.00
+* Version  : V1.39.01
 *********************************************************************************************************
 * Note(s)  : (1) Assumes the following versions (or more recent) of software modules are included in
 *                the project build :
@@ -85,7 +85,7 @@
 *********************************************************************************************************
 */
 
-#define  LIB_VERSION                                   13900u   /* See Note #1.                                         */
+#define  LIB_VERSION                                   13901u   /* See Note #1.                                         */
 
 
 /*
@@ -478,8 +478,9 @@ typedef enum lib_err {
 
     LIB_MEM_ERR_HEAP_EMPTY                  =     10210u,       /* Heap seg empty; i.e. NO avail mem in heap.           */
     LIB_MEM_ERR_HEAP_OVF                    =     10211u,       /* Heap seg ovf;   i.e. req'd mem ovfs rem mem in heap. */
-    LIB_MEM_ERR_HEAP_NOT_FOUND              =     10215u        /* Heap seg NOT found.                                  */
+    LIB_MEM_ERR_HEAP_NOT_FOUND              =     10215u,       /* Heap seg NOT found.                                  */
 
+    LIB_MEM_ERR_ADDR_OVF                    =     10300u        /* Memory allocation exceeds address space.             */
 } LIB_ERR;
 
 
@@ -1357,4 +1358,3 @@ typedef enum lib_err {
 */
 
 #endif                                                          /* End of lib def module include.                       */
-

@@ -3,7 +3,7 @@
 *                                               uC/LIB
 *                                       Custom Library Modules
 *
-*                    Copyright 2004-2020 Silicon Laboratories Inc. www.silabs.com
+*                    Copyright 2004-2021 Silicon Laboratories Inc. www.silabs.com
 *
 *                                 SPDX-License-Identifier: APACHE-2.0
 *
@@ -20,7 +20,7 @@
 *                                     STANDARD MEMORY OPERATIONS
 *
 * Filename : lib_mem.h
-* Version  : V1.39.00
+* Version  : V1.39.01
 *********************************************************************************************************
 * Note(s)  : (1) NO compiler-supplied standard library functions are used in library or product software.
 *
@@ -782,36 +782,57 @@ typedef  struct  mem_dyn_pool {                                 /* -------------
 #if     (CPU_CFG_ENDIAN_TYPE == CPU_ENDIAN_TYPE_BIG)
 
 
-#define  MEM_VAL_COPY_GET_INT08U_BIG(addr_dest, addr_src)      do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
+#define  MEM_VAL_COPY_GET_INT08U_BIG(addr_dest, addr_src)      do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT16U_BIG(addr_dest, addr_src)      do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); } while (0)
+#define  MEM_VAL_COPY_GET_INT16U_BIG(addr_dest, addr_src)      do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 1)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT24U_BIG(addr_dest, addr_src)      do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 2)); } while (0)
+#define  MEM_VAL_COPY_GET_INT24U_BIG(addr_dest, addr_src)      do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 2))   = (*((srcptr) + 2)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT32U_BIG(addr_dest, addr_src)      do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 2)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 3)) = (*(((CPU_INT08U *)(addr_src)) + 3)); } while (0)
+#define  MEM_VAL_COPY_GET_INT32U_BIG(addr_dest, addr_src)      do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 2))   = (*((srcptr) + 2));                                    \
+                                                                   (*((destptr) + 3))   = (*((srcptr) + 3)); } while (0)
 
+#define  MEM_VAL_COPY_GET_INT08U_LITTLE(addr_dest, addr_src)   do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                    (*((destptr) + 0))  = (*((srcptr) + 0)); } while (0)
 
+#define  MEM_VAL_COPY_GET_INT16U_LITTLE(addr_dest, addr_src)   do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 0)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT08U_LITTLE(addr_dest, addr_src)   do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
+#define  MEM_VAL_COPY_GET_INT24U_LITTLE(addr_dest, addr_src)   do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 2));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 2))   = (*((srcptr) + 0)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT16U_LITTLE(addr_dest, addr_src)   do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
-
-#define  MEM_VAL_COPY_GET_INT24U_LITTLE(addr_dest, addr_src)   do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 2)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
-
-#define  MEM_VAL_COPY_GET_INT32U_LITTLE(addr_dest, addr_src)   do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 3)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 2)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 3)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
-
+#define  MEM_VAL_COPY_GET_INT32U_LITTLE(addr_dest, addr_src)   do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 3));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 2));                                    \
+                                                                   (*((destptr) + 2))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 3))   = (*((srcptr) + 0)); } while (0)
 
 #define  MEM_VAL_COPY_GET_INT08U(addr_dest, addr_src)               MEM_VAL_COPY_GET_INT08U_BIG((addr_dest), (addr_src))
 #define  MEM_VAL_COPY_GET_INT16U(addr_dest, addr_src)               MEM_VAL_COPY_GET_INT16U_BIG((addr_dest), (addr_src))
@@ -822,35 +843,57 @@ typedef  struct  mem_dyn_pool {                                 /* -------------
 #elif   (CPU_CFG_ENDIAN_TYPE == CPU_ENDIAN_TYPE_LITTLE)
 
 
-#define  MEM_VAL_COPY_GET_INT08U_BIG(addr_dest, addr_src)      do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
+#define  MEM_VAL_COPY_GET_INT08U_BIG(addr_dest, addr_src)      do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT16U_BIG(addr_dest, addr_src)      do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
+#define  MEM_VAL_COPY_GET_INT16U_BIG(addr_dest, addr_src)      do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U * srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 0)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT24U_BIG(addr_dest, addr_src)      do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 2)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
+#define  MEM_VAL_COPY_GET_INT24U_BIG(addr_dest, addr_src)      do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 2));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 2))   = (*((srcptr) + 0)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT32U_BIG(addr_dest, addr_src)      do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 3)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 2)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 3)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
+#define  MEM_VAL_COPY_GET_INT32U_BIG(addr_dest, addr_src)      do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 3));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 2));                                    \
+                                                                   (*((destptr) + 2))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 3))   = (*((srcptr) + 0)); } while (0)
 
+#define  MEM_VAL_COPY_GET_INT08U_LITTLE(addr_dest, addr_src)   do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0)); } while (0)
 
+#define  MEM_VAL_COPY_GET_INT16U_LITTLE(addr_dest, addr_src)   do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 1)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT08U_LITTLE(addr_dest, addr_src)   do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
+#define  MEM_VAL_COPY_GET_INT24U_LITTLE(addr_dest, addr_src)   do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 2))   = (*((srcptr) + 2)); } while (0)
 
-#define  MEM_VAL_COPY_GET_INT16U_LITTLE(addr_dest, addr_src)   do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); } while (0)
-
-#define  MEM_VAL_COPY_GET_INT24U_LITTLE(addr_dest, addr_src)   do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 2)); } while (0)
-
-#define  MEM_VAL_COPY_GET_INT32U_LITTLE(addr_dest, addr_src)   do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 2)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 3)) = (*(((CPU_INT08U *)(addr_src)) + 3)); } while (0)
+#define  MEM_VAL_COPY_GET_INT32U_LITTLE(addr_dest, addr_src)   do {                                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   (*((destptr) + 0))   = (*((srcptr) + 0));                                    \
+                                                                   (*((destptr) + 1))   = (*((srcptr) + 1));                                    \
+                                                                   (*((destptr) + 2))   = (*((srcptr) + 2));                                    \
+                                                                   (*((destptr) + 3))   = (*((srcptr) + 3)); } while (0)
 
 
 #define  MEM_VAL_COPY_GET_INT08U(addr_dest, addr_src)               MEM_VAL_COPY_GET_INT08U_LITTLE((addr_dest), (addr_src))
@@ -1197,28 +1240,40 @@ typedef  struct  mem_dyn_pool {                                 /* -------------
 *********************************************************************************************************
 */
 
-#define  MEM_VAL_COPY_08(addr_dest, addr_src)                  do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); } while (0)
+#define  MEM_VAL_COPY_08(addr_dest, addr_src)                  do {                                                                             \
+                                                                   CPU_INT08U *destptr = (CPU_INT08U *)(addr_dest);                             \
+                                                                   CPU_INT08U *srcptr  = (CPU_INT08U *)(addr_src);                              \
+                                                                   (*(destptr + 0))    = (*(srcptr + 0)); } while (0)
 
-#define  MEM_VAL_COPY_16(addr_dest, addr_src)                  do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); } while (0)
+#define  MEM_VAL_COPY_16(addr_dest, addr_src)                  do {                                                                             \
+                                                                   CPU_INT08U *destptr = (CPU_INT08U *)(addr_dest);                             \
+                                                                   CPU_INT08U *srcptr  = (CPU_INT08U *)(addr_src);                              \
+                                                                   (*(destptr + 0))    = (*(srcptr + 0));                                       \
+                                                                   (*(destptr + 1))    = (*(srcptr + 1)); } while (0)
 
-#define  MEM_VAL_COPY_24(addr_dest, addr_src)                  do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 2)); } while (0)
+#define  MEM_VAL_COPY_24(addr_dest, addr_src)                  do {                                                                             \
+                                                                   CPU_INT08U *destptr = (CPU_INT08U *)(addr_dest);                             \
+                                                                   CPU_INT08U *srcptr  = (CPU_INT08U *)(addr_src);                              \
+                                                                   (*(destptr + 0))    = (*(srcptr + 0));                                       \
+                                                                   (*(destptr + 1))    = (*(srcptr + 1));                                       \
+                                                                   (*(destptr + 2))    = (*(srcptr + 2)); } while (0)
 
-#define  MEM_VAL_COPY_32(addr_dest, addr_src)                  do { (*(((CPU_INT08U *)(addr_dest)) + 0)) = (*(((CPU_INT08U *)(addr_src)) + 0)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 1)) = (*(((CPU_INT08U *)(addr_src)) + 1)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 2)) = (*(((CPU_INT08U *)(addr_src)) + 2)); \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) + 3)) = (*(((CPU_INT08U *)(addr_src)) + 3)); } while (0)
+#define  MEM_VAL_COPY_32(addr_dest, addr_src)                  do {                                                                             \
+                                                                   CPU_INT08U *destptr = (CPU_INT08U *)(addr_dest);                             \
+                                                                   CPU_INT08U *srcptr  = (CPU_INT08U *)(addr_src);                              \
+                                                                   (*(destptr + 0))    = (*(srcptr + 0));                                       \
+                                                                   (*(destptr + 1))    = (*(srcptr + 1));                                       \
+                                                                   (*(destptr + 2))    = (*(srcptr + 2));                                       \
+                                                                   (*(destptr + 3))    = (*(srcptr + 3));} while (0)
 
-
-#define  MEM_VAL_COPY(addr_dest, addr_src, val_size)        do {                                                                                \
-                                                                CPU_SIZE_T  _i;                                                                 \
-                                                                                                                                                \
-                                                                for (_i = 0; _i < (val_size); _i++) {                                           \
-                                                                    (*(((CPU_INT08U *)(addr_dest)) +_i)) = (*(((CPU_INT08U *)(addr_src)) +_i)); \
-                                                                }                                                                               \
-                                                            } while (0)
+#define  MEM_VAL_COPY(addr_dest, addr_src, val_size)           do {                                                                             \
+                                                                   CPU_SIZE_T   _i;                                                             \
+                                                                   CPU_INT08U  *destptr = (CPU_INT08U *)(addr_dest);                            \
+                                                                   CPU_INT08U  *srcptr  = (CPU_INT08U *)(addr_src);                             \
+                                                                   for (_i = 0; _i < (val_size); _i++) {                                        \
+                                                                       (*(destptr +_i)) = (*(srcptr +_i));                                      \
+                                                                   }                                                                            \
+                                                               } while (0)
 
 
 /*
