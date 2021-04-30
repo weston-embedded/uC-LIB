@@ -3,7 +3,7 @@
 *                                               uC/LIB
 *                                       Custom Library Modules
 *
-*                    Copyright 2004-2020 Silicon Laboratories Inc. www.silabs.com
+*                    Copyright 2004-2021 Silicon Laboratories Inc. www.silabs.com
 *
 *                                 SPDX-License-Identifier: APACHE-2.0
 *
@@ -20,7 +20,7 @@
 *                                     ASCII CHARACTER OPERATIONS
 *
 * Filename : lib_ascii.c
-* Version  : V1.39.00
+* Version  : V1.39.01
 *********************************************************************************************************
 * Note(s)  : (1) NO compiler-supplied standard library functions are used in library or product software.
 *
@@ -641,4 +641,3 @@ CPU_BOOLEAN  ASCII_Cmp (CPU_CHAR  c1,
 
     return (cmp);
 }
-

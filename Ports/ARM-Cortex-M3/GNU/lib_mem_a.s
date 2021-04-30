@@ -2,7 +2,7 @@
 @                                               uC/LIB
 @                                       Custom Library Modules
 @
-@                    Copyright 2004-2020 Silicon Laboratories Inc. www.silabs.com
+@                    Copyright 2004-2021 Silicon Laboratories Inc. www.silabs.com
 @
 @                                 SPDX-License-Identifier: APACHE-2.0
 @
@@ -21,7 +21,7 @@
 @                                           GNU Compiler
 @
 @ Filename : lib_mem_a.s
-@ Version  : V1.39.00
+@ Version  : V1.39.01
 @********************************************************************************************************
 @ Note(s)  : (1) NO compiler-supplied standard library functions are used in library or product software.
 @
@@ -295,4 +295,3 @@ Mem_Copy_END:
 
 
 .end
-
