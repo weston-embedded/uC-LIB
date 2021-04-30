@@ -21,7 +21,7 @@
 ;                                           IAR Compiler
 ;
 ; Filename : lib_mem_a.asm
-; Version  : V1.39.00
+; Version  : V1.39.01
 ;********************************************************************************************************
 ; Note(s)  : (1) NO compiler-supplied standard library functions are used in library or product software.
 ;
@@ -281,4 +281,3 @@ Mem_Copy_END:
 
 
         END
-

@@ -20,7 +20,7 @@
 *                                     ASCII CHARACTER OPERATIONS
 *
 * Filename : lib_ascii.c
-* Version  : V1.39.00
+* Version  : V1.39.01
 *********************************************************************************************************
 * Note(s)  : (1) NO compiler-supplied standard library functions are used in library or product software.
 *
@@ -641,4 +641,3 @@ CPU_BOOLEAN  ASCII_Cmp (CPU_CHAR  c1,
 
     return (cmp);
 }
-

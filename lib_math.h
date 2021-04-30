@@ -20,7 +20,7 @@
 *                                        MATHEMATIC OPERATIONS
 *
 * Filename  : lib_math.h
-* Version   : V1.39.00
+* Version   : V1.39.01
 *********************************************************************************************************
 * Note(s)   : (1) NO compiler-supplied standard library functions are used in library or product software.
 *
@@ -284,4 +284,3 @@ RAND_NBR  Math_RandSeed   (RAND_NBR  seed);
 */
 
 #endif                                                          /* End of lib math module include.                      */
-

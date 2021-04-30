@@ -20,7 +20,7 @@
 *                                       ASCII STRING MANAGEMENT
 *
 * Filename  : lib_str.c
-* Version   : V1.39.00
+* Version   : V1.39.01
 *********************************************************************************************************
 * Note(s)   : (1) NO compiler-supplied standard library functions are used in library or product software.
 *
@@ -4028,4 +4028,3 @@ static  CPU_INT32U  Str_ParseNbr_Int32 (const  CPU_CHAR      *pstr,
 
     return (nbr);
 }
-

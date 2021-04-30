@@ -20,7 +20,7 @@
 *                                     CORE CUSTOM LIBRARY MODULE
 *
 * Filename : lib_def.h
-* Version  : V1.39.00
+* Version  : V1.39.01
 *********************************************************************************************************
 * Note(s)  : (1) Assumes the following versions (or more recent) of software modules are included in
 *                the project build :
@@ -85,7 +85,7 @@
 *********************************************************************************************************
 */
 
-#define  LIB_VERSION                                   13900u   /* See Note #1.                                         */
+#define  LIB_VERSION                                   13901u   /* See Note #1.                                         */
 
 
 /*
@@ -1358,4 +1358,3 @@ typedef enum lib_err {
 */
 
 #endif                                                          /* End of lib def module include.                       */
-
